@@ -1,0 +1,195 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Myfavmov.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.Resources>
+		<DataTemplate x:Key="ItemViewModelTemplate">
+			<StackPanel>
+				<TextBlock Text="{Binding LineOne}"/>
+				<TextBlock Text="{Binding LineThree}"/>
+				<TextBlock Text="{Binding LineTwo}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="ItemTemplate">
+			<StackPanel>
+				<TextBlock Text="{Binding Line}"/>
+				<CheckBox IsChecked="{Binding Line1, Mode=TwoWay}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="ItemTemplate1">
+			<StackPanel>
+				<TextBlock Text="{Binding Movie_Title}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="ItemTemplate2">
+			<StackPanel>
+				<Image Source="{Binding Property1}" HorizontalAlignment="Left" Height="64" Width="64"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="ItemTemplate3">
+			<StackPanel>
+				<TextBlock Text="{Binding Movie_Title}"/>
+			</StackPanel>
+		</DataTemplate>
+	</phone:PhoneApplicationPage.Resources>
+	<phone:PhoneApplicationPage.Background>
+		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+			<GradientStop Color="Black" Offset="0"/>
+			<GradientStop Color="#FF0D078F" Offset="1"/>
+		</LinearGradientBrush>
+	</phone:PhoneApplicationPage.Background>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot">
+    	<Grid.Background>
+    		<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+    			<GradientStop Color="Black" Offset="0.181"/>
+    			<GradientStop Color="{StaticResource PhoneAccentColor}" Offset="0.172"/>
+    			<GradientStop Color="#FF150100" Offset="0.172"/>
+    		</LinearGradientBrush>
+    	</Grid.Background>
+    	<Grid.RowDefinitions>
+    		<RowDefinition Height="155*"/>
+    		<RowDefinition Height="666*"/>
+    	</Grid.RowDefinitions>
+
+        <!-- LOCALIZATION NOTE:
+            To localize the displayed strings copy their values to appropriately named
+            keys in the app's neutral language resource file (AppResources.resx) then
+            replace the hard-coded text value between the attributes' quotation marks
+            with the binding clause whose path points to that string name.
+
+            For example:
+
+                Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+
+            This binding points to the template's string resource named "ApplicationTitle".
+
+            Adding supported languages in the Project Properties tab will create a
+            new resx file per language that can carry the translated values of your
+            UI strings. The binding in these examples will cause the value of the
+            attributes to be drawn from the .resx file that matches the
+            CurrentUICulture of the app at run time.
+         -->
+
+        <!--Pivot Control-->
+        <phone:Pivot x:Name="mainPivot" Title="   " Foreground="White" Grid.RowSpan="2" SelectedIndex="-30" FontFamily="Segoe WP" SelectionChanged="pivot_SelectionChanged" Background="{x:Null}">
+            <!--Pivot item one-->
+            <phone:PivotItem Header="my movs" Background="{x:Null}" Loaded="pivotMyMovs_Loaded">
+                <phone:LongListSelector x:Name="myMoviesList" Height="646" VerticalAlignment="Top" HorizontalAlignment="Left" Width="446" FontSize="36" FontWeight="Bold" SelectionChanged="myMoviesList_SelectionChanged" Background="{x:Null}" Foreground="White" Hold="myMoviesList_Hold"/>
+            </phone:PivotItem>
+            <phone:PivotItem CacheMode="{x:Null}" Header="add to favs" Background="Black">
+            	<Grid Margin="0,0,0,-27">
+            		<Button Content="Search" HorizontalAlignment="Left" Margin="0,154,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" BorderBrush="{StaticResource PhoneAccentBrush}" Click="Button_Click_1" Width="207"/>
+            		<TextBox x:Name="searchTb" HorizontalAlignment="Left" Height="82" Margin="0,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" Background="White" BorderBrush="{StaticResource PhoneAccentBrush}" SelectionBackground="{StaticResource PhoneAccentBrush}" Foreground="{StaticResource PhoneAccentBrush}" SelectionForeground="{StaticResource PhoneAccentBrush}"/>
+            		<ProgressBar x:Name="progressBarSearch" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="456" Background="#19640000" Foreground="{StaticResource PhoneAccentBrush}"/>
+            		<TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="87" Width="436" FontWeight="Bold" FontSize="64" Text="Search:" Foreground="White" FontFamily="Segoe WP"/>
+            		<Image x:Name="imageHolder" HorizontalAlignment="Left" Height="218" VerticalAlignment="Top" Width="162" Margin="10,248,0,0" Source="LFQFZ.jpg" Stretch="Fill" Visibility="Collapsed"/>
+            		<TextBlock x:Name="titleLb" TextWrapping="Wrap" VerticalAlignment="Top" Margin="177,248,41,0" RenderTransformOrigin="0.759,0.519" FontSize="24" FontWeight="Bold" Visibility="Collapsed">
+            			<Run Text="The Hobbit"/>
+            			<Run Text=": An unexcpected journey."/>
+            		</TextBlock>
+            		<TextBlock x:Name="plotLb" HorizontalAlignment="Left" Margin="10,468,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="142" Width="378" Text="A curious Hobbit, Bilbo Baggins, journeys to the Lonely Mountain with a vigorous group of Dwarves to reclaim a treasure stolen from them by the dragon Smaug." Visibility="Collapsed"/>
+            		<TextBlock x:Name="ratingLb" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="247,384,0,0" Width="40" FontSize="26.667" Foreground="White" Height="35" Visibility="Collapsed">
+            			<Run FontWeight="Bold" Text="8,9" TextDecorations="Underline"/>
+            			<LineBreak/>
+            			<Run/>
+            		</TextBlock>
+            		<TextBlock x:Name="yearLb" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,610,0,0" Height="27" FontWeight="Bold" Visibility="Collapsed">
+            			<Run Text="Year:"/>
+            			<LineBreak/>
+            			<Run/>
+            			<LineBreak/>
+            			<Run/>
+            		</TextBlock>
+            		<TextBlock x:Name="runtimeLb" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,579,0,0" FontWeight="Bold" Visibility="Collapsed">
+            			<Run Text="Runtime: "/>
+            			<Run/>
+            		</TextBlock>
+            		<Button x:Name="rateButton" Content="FavIt" HorizontalAlignment="Left" Margin="337,584,0,0" VerticalAlignment="Top" Width="119" Background="Black" BorderBrush="{StaticResource PhoneAccentBrush}" Foreground="White" Click="rateButton_Click"/>
+            		<HyperlinkButton x:Name="suggestionLink" Content="Or did you mean?" HorizontalAlignment="Left" Margin="202,166,0,0" VerticalAlignment="Top" Width="244" FontSize="21.333" Background="Black" Foreground="{StaticResource PhoneAccentBrush}" Click="suggestionLink_Click_1" Height="42" Visibility="Collapsed"/>
+            	</Grid>
+            </phone:PivotItem>
+
+            <!--Pivot item two-->
+            <phone:PivotItem x:Name="moviePivot" Header="mov details">
+            	<Grid x:Name="movieGrid" HorizontalAlignment="Left" Height="656" VerticalAlignment="Top" Width="456" Visibility="Collapsed">
+            		<Image x:Name="posterHolder" VerticalAlignment="Top" Margin="0,50,0,0" Width="200" Height="250" HorizontalAlignment="Center" />
+            		<TextBlock x:Name="movieTitleHolder" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="32" Margin="0" FontWeight="Bold" Text="The Godfather"/>
+            		<TextBlock x:Name="jaarHolder" HorizontalAlignment="Center" TextWrapping="Wrap" Text="1972" VerticalAlignment="Top" Margin="159,535,213,0" FontSize="21.333" Width="84"/>
+            		<TextBlock x:Name="runtimeHolder" HorizontalAlignment="Center" TextWrapping="Wrap" Text="2h 55min" VerticalAlignment="Top" Margin="161,503,158,0" FontStyle="Italic" FontSize="18.667" Width="137"/>
+            		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Year of release:" VerticalAlignment="Top" Margin="-5,536,0,0" FontStyle="Italic" FontWeight="Bold"/>
+            		<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Margin="-5,568,313,0" FontWeight="Bold" FontStyle="Italic">
+            			<Run Text="Personal rating:"/>
+            			<LineBreak/>
+            			<Run/>
+            		</TextBlock>
+            		<Button x:Name="shareButton" Content="Share" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="326,584,0,0" Click="shareButton_Click" RenderTransformOrigin="0.519,0.542" BorderBrush="White">
+            			<Button.Foreground>
+            				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+            			</Button.Foreground>
+            		</Button>
+            		<TextBlock x:Name="pratingHolder" HorizontalAlignment="Center" TextWrapping="Wrap" Text="8/10" VerticalAlignment="Top" Margin="160,568,158,0" FontSize="24" FontFamily="Segoe  WP" Width="138"/>
+            		<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="IMDB Rating:" VerticalAlignment="Top" FontWeight="Bold" Margin="-5,594,335,0" FontStyle="Italic"/>
+            		<TextBlock x:Name="imdbRatingHolder" HorizontalAlignment="Left" TextWrapping="Wrap" Text="9.2" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe WP" Foreground="White" Margin="161,594,0,0"/>
+            		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Directed by:" VerticalAlignment="Top" Margin="0,300,0,0" FontStyle="Italic" FontWeight="Bold"/>
+            		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Runtime:" VerticalAlignment="Top" Margin="0,503,0,0" FontWeight="Bold" FontStyle="Italic"/>
+            		<TextBlock x:Name="directorHolder" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="119,300,0,0">
+            			<Run Text="Francis Ford Copolla"/>
+            			<LineBreak/>
+            			<Run/>
+            		</TextBlock>
+            		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Plot summary:" VerticalAlignment="Top" Margin="0,332,0,0" FontStyle="Italic" FontWeight="Bold"/>
+            		<ScrollViewer HorizontalAlignment="Left" Height="141" VerticalAlignment="Top" Width="456" Margin="0,364,0,0">
+            			<TextBlock x:Name="plotHolder" TextWrapping="Wrap" Text="The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son."/>
+            		</ScrollViewer>
+            		<Button x:Name="rButton" Content="Rate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="326,525,0,0" Width="108" Foreground="{StaticResource PhoneAccentBrush}" Click="rButton_Click"/>
+            	</Grid>
+                <!--Double line list no text wrapping-->
+            </phone:PivotItem>
+        </phone:Pivot>
+        <Popup x:Name="favPopup" Grid.RowSpan="2" Visibility="Collapsed">
+        	<Grid Height="430" Width="479" Background="{StaticResource PhoneAccentBrush}">
+        		<Slider x:Name="rateSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="479" Margin="0,256,0,0" ValueChanged="rateSlider_ValueChanged_1" Background="White" BorderBrush="White"/>
+        		<TextBlock HorizontalAlignment="Left" Margin="162,192,-142,0" TextWrapping="Wrap" Text="Rate:" VerticalAlignment="Top" FontSize="64" FontWeight="Bold" Foreground="White" Width="459" Height="100"/>
+        		<TextBlock x:Name="rateTxt" HorizontalAlignment="Left" Margin="200,297,0,0" TextWrapping="Wrap" Text="0/10" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" TextDecorations="Underline" Foreground="White"/>
+        		<Button x:Name="favButton" Content="OK" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="388,348,0,0" Click="favButton_Click" Foreground="White" BorderBrush="White"/>
+        		<Button x:Name="wButton" Content="Add to watchlist!" HorizontalAlignment="Left" VerticalAlignment="Top" Width="469" Margin="0,45,0,0" Click="wButton_Click" Foreground="White" BorderBrush="White"/>
+        		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Or" VerticalAlignment="Top" RenderTransformOrigin="11,3.63" Width="114" Margin="228,117,0,0" Foreground="White"/>
+        	</Grid>
+        </Popup>
+        <Grid x:Name="suggestionGrid" HorizontalAlignment="Left" Height="567" VerticalAlignment="Top" Width="480" Grid.RowSpan="2" Visibility="Collapsed" Background="{StaticResource PhoneAccentBrush}">
+        	<TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" Text="Suggestions:" VerticalAlignment="Top" FontSize="76" Height="115" Width="460" FontWeight="Bold" Foreground="White"/>
+        	<phone:LongListSelector x:Name="movielist" HorizontalAlignment="Left" Height="442" Margin="10,115,0,0" VerticalAlignment="Top" Width="460" FontSize="26.667" SelectionChanged="movielist_SelectionChanged" FontWeight="Bold" Foreground="White"/>
+        </Grid>
+        <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100"/>
+        <Popup x:Name="favPopup2" Grid.RowSpan="2">
+        	<Grid Height="184" Width="479" Background="{StaticResource PhoneAccentBrush}">
+        		<Slider x:Name="rateSlider2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="479" Margin="0,74,0,0" ValueChanged="rateSlider2_ValueChanged"/>
+        		<TextBlock HorizontalAlignment="Left" Margin="164,0,-144,0" TextWrapping="Wrap" Text="Rate:" VerticalAlignment="Top" FontSize="64" FontWeight="Bold" Foreground="White" Width="459" Height="100"/>
+        		<TextBlock x:Name="rateTxt1" HorizontalAlignment="Left" Margin="206,115,0,0" TextWrapping="Wrap" Text="0/10" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" TextDecorations="Underline"/>
+        		<Button x:Name="favButton2" Content="OK" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="388,105,0,0" Click="favButton2_Click"/>
+        	</Grid>
+        </Popup>
+
+        <!--Uncomment to see an alignment grid to help ensure your controls are
+            aligned on common boundaries.  The image has a top margin of -32px to
+            account for the System Tray. Set this to 0 (or remove the margin altogether)
+            if the System Tray is hidden.
+
+            Before shipping remove this XAML and the image itself.-->
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" IsHitTestVisible="False" />-->
+    </Grid>
+
+</phone:PhoneApplicationPage>
